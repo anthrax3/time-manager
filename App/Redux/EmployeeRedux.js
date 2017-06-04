@@ -7,6 +7,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   fetchList: ['list'],
+  setCurrent: ['current', 'dates'],
   fetchSuccess: ['list'],
   fetchFailure: ['error'],
 })
@@ -18,6 +19,8 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   list: null,
+  current: null,
+  dates: null,
   error: null,
   fetching: false
 })
@@ -36,9 +39,13 @@ export const success = (state: Object, { list }: Object) =>
 export const failure = (state: Object, { error }: Object) =>
   state.merge({ fetching: false, error })
 
+export const current = (state: Object, { current, dates }: Object) =>
+  state.merge({ current, dates })
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
+  [Types.SET_CURRENT]: current,
   [Types.FETCH_LIST]: request,
   [Types.FETCH_SUCCESS]: success,
   [Types.FETCH_FAILURE]: failure

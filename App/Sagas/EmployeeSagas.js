@@ -1,5 +1,6 @@
 import { call, put } from 'redux-saga/effects'
 import EmployeeActions from '../Redux/EmployeeRedux'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // attempts to fetch list of employees
 export function * fetchList (api, {type}) {
@@ -12,5 +13,20 @@ export function * fetchList (api, {type}) {
   } else {
     // dispatch employee list
     yield put(EmployeeActions.fetchFailure('WRONG'))
+  }
+}
+
+// attempts to set current employee
+export function * setCurrent ({current}) {
+  console.log('arguments => ', arguments);
+  if (current) {
+    // let dates = {
+    //   weekNum: Moment(curDate).week(),
+    //   startDate: Moment(curDate, 'YYYYMMDD').startOf('week'),
+    //   endDate: Moment(curDate, 'YYYYMMDD').endOf('week'),
+    //   viewing: `${this.state.startDate.toLocaleDateString()} / ${this.state.endDate.toLocaleDateString()}`
+    // };
+
+    yield call(NavigationActions.employeeDetail)
   }
 }

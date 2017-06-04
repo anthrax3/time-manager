@@ -17,6 +17,7 @@ type EmployeeDirectoryProps = {
   dispatch: () => any,
   fetching: boolean,
   fetchList: () => void,
+  setCurrent: () => void,
   employees: object,
   selectedEmployee: object
 }
@@ -64,18 +65,14 @@ class EmployeeDirectory extends Component {
 
   renderRow (rowData) {
     return (
-      <TouchableOpacity style={styles.row} onPress={Actions.employeeDetail}>
-        <Gravatar options={{email: rowData.email}} style={styles.avatar} />
+      <TouchableOpacity style={styles.row} onPress={() => this.props.dispatch(EmployeeActions.setCurrent(rowData))}>
+        <Gravatar options={{email: rowData.email, secure: true}} style={styles.avatar} />
         <View>
           <Text style={styles.boldLabel}>{rowData.id}: {rowData.username}</Text>
           <Text style={styles.label}>{rowData.email}</Text>
         </View>
       </TouchableOpacity>
     )
-  }
-
-  handlePress = rowData => {
-    console.log(JSON.stringify(rowData))
   }
 
   // Used for friendly AlertMessage
@@ -91,7 +88,7 @@ class EmployeeDirectory extends Component {
         <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.employees}
-          renderRow={this.renderRow}
+          renderRow={this.renderRow.bind(this)}
           pageSize={15}
         />
       </View>
@@ -102,6 +99,7 @@ class EmployeeDirectory extends Component {
 const mapStateToProps = state => {
   return {
     fetching: state.employee.fetching,
+    current: state.employee.current,
     employees: state.employee.list
   }
 }
