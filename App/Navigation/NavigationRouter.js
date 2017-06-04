@@ -23,7 +23,7 @@ class NavigationRouter extends Component {
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
             <Scene initial key='presentationScreen' component={PresentationScreen} title='Aurity Management'/>
             <Scene key='employeeDirectory' component={EmployeeDirectory} title='Employee Directory'/>
-            <Scene key='employeeDetail' component={Employee} title='Employee Detail' />
+            <Scene key='employeeDetail' component={Employee} title='Employee Detail' passProps/>
           </Scene>
         </Scene>
       </Router>

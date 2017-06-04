@@ -3017,7 +3017,7 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment@2.x.x:
+moment@2.x.x, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -3463,6 +3463,18 @@ react-devtools-core@^2.0.8:
 react-native-animatable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.0.tgz#fd279c6ee4b49161c6cc3b951ed7765b35a73467"
+
+"react-native-calendar-select@git+https://github.com/kevinchappell/react-native-calendar-select.git#feature/selectWeek":
+  version "0.1.1"
+  resolved "git+https://github.com/kevinchappell/react-native-calendar-select.git#c916749bc5334cb0336bf07607ccfbd1ca2ab77f"
+  dependencies:
+    moment "^2.18.1"
+
+"react-native-calendar-select@https://github.com/kevinchappell/react-native-calendar-select.git#c916749":
+  version "0.1.1"
+  resolved "https://github.com/kevinchappell/react-native-calendar-select.git#c916749"
+  dependencies:
+    moment "^2.18.1"
 
 react-native-drawer@^2.3.0:
   version "2.3.0"

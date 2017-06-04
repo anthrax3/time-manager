@@ -1,125 +1,126 @@
 {
-	"name": "TimeManager",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
-	},
-	"dependencies": {
-		"react": "16.0.0-alpha.6",
-		"react-native": "0.44.2",
-		"react-native-animatable": "^1.2.0",
-		"react-native-gravatar": "^1.0.2",
-		"react-native-router-flux": "^3.39.2",
-		"react-redux": "^5.0.5",
-		"redux": "^3.6.0",
-		"redux-logger": "^3.0.6",
-		"redux-thunk": "^2.2.0"
-	},
-	"devDependencies": {
-		"babel-eslint": "^7.2.3",
-		"babel-jest": "20.0.3",
-		"babel-preset-react-native": "1.9.2",
-		"eslint": "^3.19.0",
-		"eslint-config-airbnb": "^15.0.1",
-		"eslint-plugin-flowtype": "^2.34.0",
-		"eslint-plugin-react": "^7.0.1",
-		"jest": "20.0.4",
-		"react-native-drawer": "^2.3.0",
-		"react-native-vector-icons": "^4.2.0",
-		"react-test-renderer": "16.0.0-alpha.6",
-		"reactotron-react-native": "^1.11.1",
-		"reactotron-redux": "^1.11.1",
-		"reactotron-redux-saga": "^1.11.1",
-		"redux-persist": "^4.8.0",
-		"redux-saga": "^0.15.3",
-		"reduxsauce": "^0.5.0",
-		"seamless-immutable": "^7.1.2"
-	},
-	"jest": {
-		"preset": "react-native"
-	},
-	"eslintConfig": {
-		"parser": "babel-eslint",
-		"ecmaFeatures": {
-			"blockBindings": true,
-			"forOf": true,
-			"jsx": true
-		},
-		"extends": [
-			"airbnb"
-		],
-		"plugins": [
-			"react",
-			"flowtype"
-		],
-		"rules": {
-			"react/jsx-filename-extension": [
-				1,
-				{
-					"extensions": [
-						".js",
-						".jsx"
-					]
-				}
-			],
-			"arrow-body-style": 0,
-			"semi": 0,
-			"func-names": 0,
-			"react/jsx-quotes": 0,
-			"jsx-quotes": [
-				2,
-				"prefer-double"
-			],
-			"no-use-before-define": [
-				2,
-				"nofunc"
-			],
-			"new-cap": 0,
-			"no-param-reassign": 0,
-			"no-unused-vars": 1,
-			"indent": [
-				2,
-				2,
-				{
-					"SwitchCase": 1
-				}
-			],
-			"react/jsx-boolean-value": 0,
-			"id-length": [
-				2,
-				{
-					"exceptions": [
-						"x",
-						"y",
-						"Q",
-						"e"
-					]
-				}
-			],
-			"max-len": [
-				2,
-				120,
-				2,
-				{
-					"ignoreUrls": true
-				}
-			],
-			"import/no-extraneous-dependencies": [
-				"error",
-				{
-					"devDependencies": [
-						"**/*.spec.js"
-					]
-				}
-			],
-			"import/prefer-default-export": 0
-		},
-		"env": {
-			"node": true,
-			"mocha": true,
-			"jasmine": true
-		}
-	}
+  "name": "TimeManager",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.44.2",
+    "react-native-animatable": "^1.2.0",
+    "react-native-calendar-select": "https://github.com/kevinchappell/react-native-calendar-select.git#c916749",
+    "react-native-gravatar": "^1.0.2",
+    "react-native-router-flux": "^3.39.2",
+    "react-redux": "^5.0.5",
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-preset-react-native": "1.9.2",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-flowtype": "^2.34.0",
+    "eslint-plugin-react": "^7.0.1",
+    "jest": "20.0.4",
+    "react-native-drawer": "^2.3.0",
+    "react-native-vector-icons": "^4.2.0",
+    "react-test-renderer": "16.0.0-alpha.6",
+    "reactotron-react-native": "^1.11.1",
+    "reactotron-redux": "^1.11.1",
+    "reactotron-redux-saga": "^1.11.1",
+    "redux-persist": "^4.8.0",
+    "redux-saga": "^0.15.3",
+    "reduxsauce": "^0.5.0",
+    "seamless-immutable": "^7.1.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "ecmaFeatures": {
+      "blockBindings": true,
+      "forOf": true,
+      "jsx": true
+    },
+    "extends": [
+      "airbnb"
+    ],
+    "plugins": [
+      "react",
+      "flowtype"
+    ],
+    "rules": {
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
+      "arrow-body-style": 0,
+      "semi": 0,
+      "func-names": 0,
+      "react/jsx-quotes": 0,
+      "jsx-quotes": [
+        2,
+        "prefer-double"
+      ],
+      "no-use-before-define": [
+        2,
+        "nofunc"
+      ],
+      "new-cap": 0,
+      "no-param-reassign": 0,
+      "no-unused-vars": 1,
+      "indent": [
+        2,
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "react/jsx-boolean-value": 0,
+      "id-length": [
+        2,
+        {
+          "exceptions": [
+            "x",
+            "y",
+            "Q",
+            "e"
+          ]
+        }
+      ],
+      "max-len": [
+        2,
+        120,
+        2,
+        {
+          "ignoreUrls": true
+        }
+      ],
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          "devDependencies": [
+            "**/*.spec.js"
+          ]
+        }
+      ],
+      "import/prefer-default-export": 0
+    },
+    "env": {
+      "node": true,
+      "mocha": true,
+      "jasmine": true
+    }
+  }
 }

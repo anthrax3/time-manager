@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 import {Gravatar} from 'react-native-gravatar'
 import EmployeeActions from '../Redux/EmployeeRedux'
-// import Employee from '../Components/Employee'
 
 // For empty lists
 import AlertMessage from '../Components/AlertMessage'
@@ -62,12 +61,10 @@ class EmployeeDirectory extends Component {
     }
   }
 
-  handlePress = userId => {
-  }
 
   renderRow (rowData) {
     return (
-      <TouchableOpacity style={styles.row} onPress={state => alert(JSON.stringify(state))}>
+      <TouchableOpacity style={styles.row} onPress={Actions.employeeDetail}>
         <Gravatar options={{email: rowData.email}} style={styles.avatar} />
         <View>
           <Text style={styles.boldLabel}>{rowData.id}: {rowData.username}</Text>
@@ -75,6 +72,10 @@ class EmployeeDirectory extends Component {
         </View>
       </TouchableOpacity>
     )
+  }
+
+  handlePress = rowData => {
+    console.log(JSON.stringify(rowData))
   }
 
   // Used for friendly AlertMessage
