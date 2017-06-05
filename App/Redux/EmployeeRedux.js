@@ -9,7 +9,8 @@ const { Types, Creators } = createActions({
   fetchList: ['list'],
   fetchLogs: ['userId', 'period'],
   setCurrent: ['current', 'dates'],
-  fetchSuccess: ['list'],
+  fetchListSuccess: ['list'],
+  fetchLogsSuccess: ['logs'],
   fetchFailure: ['error'],
 })
 
@@ -34,8 +35,8 @@ export const request = (state: Object) =>
   state.merge({ fetching: true })
 
 // fetch was a success
-export const success = (state: Object, { list }: Object) =>
-  state.merge({ fetching: false, error: null, list })
+export const success = (state: Object, { list, logs }: Object) =>
+  state.merge({ fetching: false, error: null, list, logs })
 
 // fetch was a fail
 export const failure = (state: Object, { error }: Object) =>
@@ -50,7 +51,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_CURRENT]: current,
   [Types.FETCH_LIST]: request,
   [Types.FETCH_LOGS]: request,
-  [Types.FETCH_SUCCESS]: success,
+  [Types.FETCH_LIST_SUCCESS]: success,
+  [Types.FETCH_LOGS_SUCCESS]: success,
   [Types.FETCH_FAILURE]: failure
 })
 

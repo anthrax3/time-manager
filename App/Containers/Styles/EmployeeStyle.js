@@ -26,17 +26,6 @@ export default StyleSheet.create({
   email: {
     color: Colors.frost
   },
-  viewingHeader: {
-    ...Fonts.style.h5,
-    textAlign: 'center',
-    color: Colors.snow
-  },
-  viewing: {
-    ...Fonts.style.description,
-    color: Colors.snow,
-    padding: Metrics.smallMargin,
-    textAlign: 'center'
-  },
   avatar: {
     width: 150,
     height: 150,

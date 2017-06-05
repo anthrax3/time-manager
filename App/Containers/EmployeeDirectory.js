@@ -34,11 +34,7 @@ class EmployeeDirectory extends Component {
 
     let dataObjects = [];
 
-    if (!this.props.employees.length) {
-      this.props.dispatch(EmployeeActions.fetchList())
-    } else {
-      dataObjects = this.props.employees
-    }
+    this.props.dispatch(EmployeeActions.fetchList())
 
     // Teach dataSource how to detect if rows are different.
     const rowHasChanged = (r1, r2) => r1.id !== r2.id

@@ -23,7 +23,6 @@ export default class AlertMessage extends Component {
     let messageComponent = null
     if (this.props.show) {
       const { title } = this.props
-      console.log('this.props => ', this.props);
       return (
         <Animatable.View
           style={[styles.container, this.props.style]}
@@ -31,11 +30,6 @@ export default class AlertMessage extends Component {
           animation='bounceIn'
         >
           <View style={styles.contentContainer}>
-            <Icon
-              name={this.props.icon || 'ios-alert'}
-              size={Metrics.icons.large}
-              style={styles.icon}
-            />
             <Text allowFontScaling={false} style={styles.message}>{title && title.toUpperCase()}</Text>
           </View>
         </Animatable.View>

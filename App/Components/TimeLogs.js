@@ -51,40 +51,31 @@ class TimeLogs extends Component {
     // DataSource configured
     const ds = new ListView.DataSource({rowHasChanged})
 
+
+    let period = [
+      dates.startDate.month(),
+      dates.startDate.year()
+    ];
+
+    this.props.dispatch(EmployeeActions.fetchLogs(props.userId, period))
+
     this.state = {
       ...dates,
       viewing: this.viewingFormat(dates.startDate, dates.endDate),
       logs: ds.cloneWithRows(dataObjects)
     };
 
-    if (!this.props.logs.length) {
-      let period = [
-        this.state.startDate.month(),
-        this.state.startDate.year()
-      ];
-
-      this.props.dispatch(EmployeeActions.fetchLogs(props.userId, period))
-    } else {
-      dataObjects = this.props.logs
-    }
-
-    console.log('this.state => ', this.state);
-    console.log('this.props => ', this.props);
-
-
-
     this.confirmDate = this.confirmDate.bind(this)
     this.openCalendar = this.openCalendar.bind(this)
   }
 
-  componentWillReceiveProps ({fetching}) {
-    console.log('arguments => ', arguments);
+  componentWillReceiveProps ({fetching, logs}) {
     // Did the fetch complete?
-    // if (!fetching && logs) {
-    //   this.setState({
-    //     logs: this.state.logs.weeks.cloneWithRows(logs.week)
-    //   })
-    // }
+    if (!fetching && logs.data) {
+      this.setState({
+        logs: this.state.logs.cloneWithRows(logs.data.weeks)
+      })
+    }
   }
 
   viewingFormat(startMoment, endMoment){
@@ -117,7 +108,7 @@ class TimeLogs extends Component {
   // Used for friendly AlertMessage
   // returns true if the logs is empty
   noRowData () {
-    return this.state.logs.getRowCount() === 0
+    return (!this.state.fetching && this.state.logs.getRowCount() === 0)
   }
 
   render () {
@@ -151,44 +142,27 @@ class TimeLogs extends Component {
   }
 }
 
-type WeekProps = {
-  weekNum: number
-}
-
 /**
  * Week class displays the week and its days
  * @todo abstract to own file
  */
-class Week extends TimeLogs {
-  props: WeekProps
+class Week extends Component {
 
-  constructor (props: WeekProps) {
+  constructor (props) {
     super(props)
-
-    const days = this.state.logs[props.weekIndex].days_in_weeks
-
-    // Teach dataSource how to detect different rows
-    const rowHasChanged = (r1, r2) => r1.id !== r2.id
-
     // DataSource configured
-    const ds = new ListView.DataSource({rowHasChanged})
-
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id})
     // Datasource is always in state
-    // this.state = {
-    //   logs: ds.cloneWithRows(days)
-    // }
+    this.state = {
+      days: ds.cloneWithRows(this.props.data.days_in_week)
+    }
   }
 
   renderDay (day, sec, i) {
-    const dayProps = {
-      log: `${day.hours} hours, ${day.minutes} minutes`,
-      weekday: Moment().day(i)
-    }
-    console.log('dayProps => ', dayProps);
     return (
       //@todo add note modal on touch
       <TouchableOpacity style={styles.day}>
-      <Day />
+      <Day data={day} dayIndex={i}/>
         <View>
           <Text style={styles.boldLabel}>{day.hours} hours, {day.minutes} minutes</Text>
         </View>
@@ -199,7 +173,7 @@ class Week extends TimeLogs {
   // Used for friendly AlertMessage
   // returns true if the logs is empty
   noRowData () {
-    return this.state.logs.getRowCount() === 0
+    return this.state.days.getRowCount() === 0
   }
 
   weekStyle(status) {
@@ -232,20 +206,16 @@ class Week extends TimeLogs {
  * Week class displays the week and its days
  * @todo abstract to own file
  */
-class Day extends TimeLogs {
-  props: DayProps
-
-  constructor (props: DayProps) {
+class Day extends Component {
+  constructor (props) {
     super(props)
-
-    const days = this.state.logs[prop.weekId].days_in_weeks
   }
 
   render () {
     return (
       <View style={styles.dayCell}>
-        <Text style={styles.weekday}>{this.props.weekday}</Text>
-        <Text style={styles.dayLog}>{this.props.log}</Text>
+        <Text style={styles.weekday}>{Moment().day(this.props.dayIndex).format('dddd')}</Text>
+        <Text style={styles.dayLog}>{this.props.data.log}</Text>
       </View>
     )
   }
@@ -254,7 +224,7 @@ class Day extends TimeLogs {
 const mapStateToProps = state => {
   return {
     fetching: state.employee.fetching,
-    logs: state.logs || []
+    logs: state.employee.logs
   }
 }
 
