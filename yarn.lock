@@ -1099,6 +1099,10 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
+command-exists@^1.0.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.2.tgz#12819c64faf95446ec0ae07fe6cafb6eb3708b22"
+
 commander@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
@@ -3460,15 +3464,9 @@ react-devtools-core@^2.0.8:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-animatable@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.0.tgz#fd279c6ee4b49161c6cc3b951ed7765b35a73467"
-
-"react-native-calendar-select@git+https://github.com/kevinchappell/react-native-calendar-select.git#feature/selectWeek":
-  version "0.1.1"
-  resolved "git+https://github.com/kevinchappell/react-native-calendar-select.git#c916749bc5334cb0336bf07607ccfbd1ca2ab77f"
-  dependencies:
-    moment "^2.18.1"
+react-native-animatable@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.1.tgz#2758326b298dddecc8c065446f4185174bdaa4e3"
 
 "react-native-calendar-select@https://github.com/kevinchappell/react-native-calendar-select.git#c916749":
   version "0.1.1"
@@ -3497,6 +3495,15 @@ react-native-gravatar@^1.0.2:
   resolved "https://registry.yarnpkg.com/react-native-gravatar/-/react-native-gravatar-1.0.2.tgz#7ca3adf692f1060029b171baa2e5cf3c0fea92a5"
   dependencies:
     gravatar-api "^1.5.0"
+
+react-native-icon@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/react-native-icon/-/react-native-icon-0.2.10.tgz#9177e647ac05e22f3dbe20fa7ab4bb4a31363fb4"
+  dependencies:
+    chalk "^1.1.3"
+    command-exists "^1.0.2"
+    commander "^2.9.0"
+    mkdirp "^0.5.1"
 
 react-native-router-flux@^3.39.2:
   version "3.39.2"

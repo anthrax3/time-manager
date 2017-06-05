@@ -23,6 +23,7 @@ export default class AlertMessage extends Component {
     let messageComponent = null
     if (this.props.show) {
       const { title } = this.props
+      console.log('this.props => ', this.props);
       return (
         <Animatable.View
           style={[styles.container, this.props.style]}

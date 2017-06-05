@@ -94,6 +94,7 @@ class EmployeeDirectory extends Component {
           dataSource={this.state.employees}
           renderRow={this.renderRow.bind(this)}
           pageSize={15}
+          enableEmptySections
         />
       </View>
     )

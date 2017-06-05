@@ -8,8 +8,9 @@ import Calendar from 'react-native-calendar-select'
 import Moment from 'moment'
 import EmployeeActions from '../Redux/EmployeeRedux'
 
-// For empty lists
 import AlertMessage from '../Components/AlertMessage'
+import RoundedButton from '../Components/RoundedButton'
+import Colors from '../Themes/Colors'
 
 // Styles
 import styles from './Styles/TimeLogsStyle'
@@ -116,14 +117,13 @@ class TimeLogs extends Component {
   // Used for friendly AlertMessage
   // returns true if the logs is empty
   noRowData () {
-console.log('this.state.logs => ', this.state.logs);
-    return this.state.logs.weeks.getRowCount() === 0
+    return this.state.logs.getRowCount() === 0
   }
 
   render () {
     return (
       <View style={styles.container}>
-        <AlertMessage title='No found for this month' show={this.noRowData()} />
+        <AlertMessage title={`No data found for ${this.state.viewing}`} show={this.noRowData()} />
         <Text style={styles.viewingHeader}>Currently Viewing</Text>
         <Text style={styles.viewing}>{this.state.viewing}</Text>
         <ListView
@@ -131,6 +131,7 @@ console.log('this.state.logs => ', this.state.logs);
           dataSource={this.state.logs}
           renderRow={this.renderWeek.bind(this)}
           pageSize={4}
+          enableEmptySections
         />
         <RoundedButton onPress={this.openCalendar}>Select Week</RoundedButton>
         <Calendar

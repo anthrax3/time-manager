@@ -13,8 +13,6 @@ import { connect } from 'react-redux'
 import Calendar from 'react-native-calendar-select'
 import Moment from 'moment'
 import EmployeeActions from '../Redux/EmployeeRedux'
-import Colors from '../Themes/Colors'
-import RoundedButton from '../Components/RoundedButton'
 import TimeLogs from '../Components/TimeLogs'
 // external libs
 // import Icon from 'react-native-vector-icons/FontAwesome'
