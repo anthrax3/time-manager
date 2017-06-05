@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import { View, Text, ListView, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
+import Calendar from 'react-native-calendar-select'
 import Moment from 'moment'
 import EmployeeActions from '../Redux/EmployeeRedux'
 
@@ -21,23 +22,27 @@ type TimeLogsProps = {
   month: number,
   year: number,
   userId: string,
-  currentWeek: number
+  weekNum: number,
+  viewMode: string // 'month' || 'week'
 }
 
 class TimeLogs extends Component {
   props: TimeLogsProps
 
   state: {
-    logs: object,
-    selectedEmployee: object
+    logs: object
   }
 
   constructor (props: TimeLogsProps) {
     super(props)
 
-    const dataObjects = []
-
-    this.props.dispatch(EmployeeActions.fetchLogs(props.userId))
+    let dataObjects = []
+    const curDate = new Date()
+    const dates = {
+      weekNum: Moment(curDate).week(),
+      startDate: Moment(curDate, 'YYYYMMDD').startOf('week'),
+      endDate: Moment(curDate, 'YYYYMMDD').endOf('week')
+    };
 
     // Teach dataSource how to detect if rows are different.
     const rowHasChanged = (r1, r2) => r1.id !== r2.id
@@ -45,24 +50,59 @@ class TimeLogs extends Component {
     // DataSource configured
     const ds = new ListView.DataSource({rowHasChanged})
 
-    // Datasource is always in state
     this.state = {
+      ...dates,
+      viewing: this.viewingFormat(dates.startDate, dates.endDate),
       logs: ds.cloneWithRows(dataObjects)
+    };
+
+    if (!this.props.logs.length) {
+      let period = [
+        this.state.startDate.month(),
+        this.state.startDate.year()
+      ];
+
+      this.props.dispatch(EmployeeActions.fetchLogs(props.userId, period))
+    } else {
+      dataObjects = this.props.logs
     }
+
+    console.log('this.state => ', this.state);
+    console.log('this.props => ', this.props);
+
+
+
+    this.confirmDate = this.confirmDate.bind(this)
+    this.openCalendar = this.openCalendar.bind(this)
   }
 
-  componentWillReceiveProps ({fetching, logs}) {
+  componentWillReceiveProps ({fetching}) {
+    console.log('arguments => ', arguments);
     // Did the fetch complete?
-    if (!fetching && logs) {
-      this.setState({
-        logs: this.state.logs.weeks.cloneWithRows(logs.week)
-      })
-    }
+    // if (!fetching && logs) {
+    //   this.setState({
+    //     logs: this.state.logs.weeks.cloneWithRows(logs.week)
+    //   })
+    // }
   }
 
   viewingFormat(startMoment, endMoment){
     const dateFormat = 'YYYY-MM-DD'
     return `${startMoment.format(dateFormat)} / ${endMoment.format(dateFormat)}`
+  }
+
+  // Update states when new week selection is confirmed
+  confirmDate({startDate, endDate, startMoment, endMoment}) {
+    this.setState({
+      startDate,
+      endDate,
+      weekNum: startMoment.week(),
+      viewing: this.viewingFormat(startMoment, endMoment)
+    });
+  }
+
+  openCalendar() {
+    this.calendar && this.calendar.open()
   }
 
   renderWeek (week, section, index) {
@@ -76,6 +116,7 @@ class TimeLogs extends Component {
   // Used for friendly AlertMessage
   // returns true if the logs is empty
   noRowData () {
+console.log('this.state.logs => ', this.state.logs);
     return this.state.logs.weeks.getRowCount() === 0
   }
 
@@ -83,11 +124,26 @@ class TimeLogs extends Component {
     return (
       <View style={styles.container}>
         <AlertMessage title='No found for this month' show={this.noRowData()} />
+        <Text style={styles.viewingHeader}>Currently Viewing</Text>
+        <Text style={styles.viewing}>{this.state.viewing}</Text>
         <ListView
           contentContainerStyle={styles.listContent}
-          dataSource={this.state.logs.weeks}
+          dataSource={this.state.logs}
           renderRow={this.renderWeek.bind(this)}
           pageSize={4}
+        />
+        <RoundedButton onPress={this.openCalendar}>Select Week</RoundedButton>
+        <Calendar
+          i18n='en'
+          ref={calendar => {this.calendar = calendar}}
+          color={{subColor: Colors.brandHighlight, mainColor: Colors.drawer}}
+          format='YYYYMMDD'
+          startDate={this.state.startDate}
+          minDate='20170101'
+          maxDate='20171230'
+          endDate={this.state.endDate}
+          onConfirm={this.confirmDate}
+          rangeConstraint='week'
         />
       </View>
     )
@@ -117,9 +173,9 @@ class Week extends TimeLogs {
     const ds = new ListView.DataSource({rowHasChanged})
 
     // Datasource is always in state
-    this.state = {
-      logs: ds.cloneWithRows(days)
-    }
+    // this.state = {
+    //   logs: ds.cloneWithRows(days)
+    // }
   }
 
   renderDay (day, sec, i) {
@@ -197,8 +253,7 @@ class Day extends TimeLogs {
 const mapStateToProps = state => {
   return {
     fetching: state.employee.fetching,
-    week: state.employee.week,
-    logs: state.employee.logs
+    logs: state.logs || []
   }
 }
 

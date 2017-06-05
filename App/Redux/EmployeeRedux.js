@@ -7,7 +7,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   fetchList: ['list'],
-  fetchLogs: ['logs'],
+  fetchLogs: ['userId', 'period'],
   setCurrent: ['current', 'dates'],
   fetchSuccess: ['list'],
   fetchFailure: ['error'],

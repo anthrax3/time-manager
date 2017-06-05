@@ -1,4 +1,4 @@
-import { takeLatest } from 'redux-saga'
+import { takeLatest } from 'redux-saga/effects'
 import API from '../Services/Api'
 import DebugSettings from '../Config/DebugSettings'
 
@@ -12,7 +12,11 @@ import { EmployeeTypes } from '../Redux/EmployeeRedux'
 
 import { startup } from './StartupSagas'
 import { openScreen } from './OpenScreenSagas'
-import { fetchList, setCurrent } from './EmployeeSagas'
+import {
+  fetchList,
+  fetchLogs,
+  setCurrent
+} from './EmployeeSagas'
 
 /* ------------- API ------------- */
 
@@ -26,6 +30,7 @@ export default function * root () {
     takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(OpenScreenTypes.OPEN_SCREEN, openScreen),
     takeLatest(EmployeeTypes.FETCH_LIST, fetchList, API),
+    takeLatest(EmployeeTypes.FETCH_LOGS, fetchLogs, API),
     takeLatest(EmployeeTypes.SET_CURRENT, setCurrent)
 
     // some sagas receive extra parameters in addition to an action

@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { ScrollView, Image, BackAndroid, View } from 'react-native'
+import { ScrollView, Image, BackHandler, View } from 'react-native'
 import styles from './Styles/DrawerContentStyle'
 import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
@@ -10,7 +10,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 class DrawerContent extends Component {
 
   componentDidMount () {
-    BackAndroid.addEventListener('hardwareBackPress', () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       if (this.context.drawer.props.open) {
         this.toggleDrawer()
         return true

@@ -17,13 +17,13 @@ export function * fetchList (api, {type}) {
   }
 }
 
-export function * fetchLogs (api, {type}) {
+export function * fetchLogs (api, {type, userId, period}) {
   // make the call to the api
-  const users = yield call(api.users, type);
-
-  if (users) {
+  const logs = yield call(api.logs, userId, period);
+console.log('logs => ', logs);
+  if (logs) {
     // dispatch failure
-    yield put(EmployeeActions.fetchSuccess(users))
+    yield put(EmployeeActions.fetchSuccess(logs))
   } else {
     // dispatch employee list
     yield put(EmployeeActions.fetchFailure('WRONG'))
@@ -32,7 +32,6 @@ export function * fetchLogs (api, {type}) {
 
 // attempts to set current employee
 export function * setCurrent ({current}) {
-  console.log('arguments => ', arguments);
   if (current) {
     // let dates = {
     //   weekNum: Moment(curDate).week(),

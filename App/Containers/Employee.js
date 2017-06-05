@@ -30,37 +30,6 @@ class Employee extends Component {
 
   constructor (props) {
     super(props);
-    const curDate = new Date()
-    let dates = {
-      weekNum: Moment(curDate).week(),
-      startDate: Moment(curDate, 'YYYYMMDD').startOf('week'),
-      endDate: Moment(curDate, 'YYYYMMDD').endOf('week')
-    };
-    this.state = {
-      ...dates,
-      viewing: this.viewingFormat(dates.startDate, dates.endDate)
-    };
-    this.confirmDate = this.confirmDate.bind(this)
-    this.openCalendar = this.openCalendar.bind(this)
-  }
-
-  viewingFormat(startMoment, endMoment){
-    const dateFormat = 'YYYY-MM-DD'
-    return `${startMoment.format(dateFormat)} / ${endMoment.format(dateFormat)}`
-  }
-
-  // Update states when new week selection is confirmed
-  confirmDate({startDate, endDate, startMoment, endMoment}) {
-    this.setState({
-      startDate,
-      endDate,
-      weekNum: startMoment.week(),
-      viewing: this.viewingFormat(startMoment, endMoment)
-    });
-  }
-
-  openCalendar() {
-    this.calendar && this.calendar.open()
   }
 
   handleOpenEmail(email) {
@@ -77,7 +46,7 @@ class Employee extends Component {
           <View style={styles.userDetails}>
             <Gravatar options={{
               email: employee.email,
-              parameters: { size: 200 },
+              parameters: { size: 200, d: 'mm' },
               secure: true
             }} style={styles.avatar} />
             <View>
@@ -85,24 +54,7 @@ class Employee extends Component {
               <Text style={styles.email} onPress={() => this.handleOpenEmail(employee.email)}>{employee.email}</Text>
             </View>
           </View>
-          <TimeLogs currentWeek={this.state.weekNum} userId={employee.id}/>
-          <Text style={styles.viewingHeader}>Currently Viewing</Text>
-          <Text style={styles.viewing}>{this.state.viewing}</Text>
-          <RoundedButton onPress={this.openCalendar}>
-            Select Week
-          </RoundedButton>
-          <Calendar
-            i18n='en'
-            ref={calendar => {this.calendar = calendar}}
-            color={{subColor: Colors.brandHighlight, mainColor: Colors.drawer}}
-            format='YYYYMMDD'
-            startDate={this.state.startDate}
-            minDate='20170101'
-            maxDate='20171230'
-            endDate={this.state.endDate}
-            onConfirm={this.confirmDate}
-            rangeConstraint='week'
-          />
+          <TimeLogs userId={employee.id}/>
         </KeyboardAvoidingView>
       </ScrollView>
     )
