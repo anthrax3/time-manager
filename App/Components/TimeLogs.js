@@ -37,6 +37,11 @@ class TimeLogs extends Component {
   constructor (props: TimeLogsProps) {
     super(props)
 
+    this.confirmDate = this.confirmDate.bind(this)
+    this.openCalendar = this.openCalendar.bind(this)
+  }
+
+  componentWillMount() {
     let dataObjects = []
     const curDate = new Date()
     const dates = {
@@ -51,22 +56,18 @@ class TimeLogs extends Component {
     // DataSource configured
     const ds = new ListView.DataSource({rowHasChanged})
 
-
     let period = [
       dates.startDate.month(),
       dates.startDate.year()
     ];
 
-    this.props.dispatch(EmployeeActions.fetchLogs(props.userId, period))
+    this.props.dispatch(EmployeeActions.fetchLogs(this.props.userId, period))
 
     this.state = {
       ...dates,
       viewing: this.viewingFormat(dates.startDate, dates.endDate),
       logs: ds.cloneWithRows(dataObjects)
     };
-
-    this.confirmDate = this.confirmDate.bind(this)
-    this.openCalendar = this.openCalendar.bind(this)
   }
 
   componentWillReceiveProps ({fetching, logs}) {
@@ -150,6 +151,9 @@ class Week extends Component {
 
   constructor (props) {
     super(props)
+  }
+
+  componentWillMount() {
     // DataSource configured
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id})
     // Datasource is always in state
