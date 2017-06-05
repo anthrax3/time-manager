@@ -31,13 +31,6 @@ export function * fetchLogs (api, {type, userId, period}) {
 // attempts to set current employee
 export function * setCurrent ({current}) {
   if (current) {
-    // let dates = {
-    //   weekNum: Moment(curDate).week(),
-    //   startDate: Moment(curDate, 'YYYYMMDD').startOf('week'),
-    //   endDate: Moment(curDate, 'YYYYMMDD').endOf('week'),
-    //   viewing: `${this.state.startDate.toLocaleDateString()} / ${this.state.endDate.toLocaleDateString()}`
-    // };
-
     yield call(NavigationActions.employeeDetail)
   }
 }
