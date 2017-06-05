@@ -48,7 +48,8 @@ class EmployeeDirectory extends Component {
 
     // Datasource is always in state
     this.state = {
-      employees: ds.cloneWithRows(dataObjects)
+      employees: ds.cloneWithRows(dataObjects),
+      fetching: true
     }
   }
 
@@ -80,7 +81,7 @@ class EmployeeDirectory extends Component {
   // Used for friendly AlertMessage
   // returns true if the employees is empty
   noRowData () {
-    return this.state.employees.getRowCount() === 0
+    return (!this.state.fetching && this.state.employees.getRowCount() === 0)
   }
 
   render () {
