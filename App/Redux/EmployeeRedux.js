@@ -7,6 +7,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   fetchList: ['list'],
+  fetchLogs: ['logs'],
   setCurrent: ['current', 'dates'],
   fetchSuccess: ['list'],
   fetchFailure: ['error'],
@@ -21,6 +22,7 @@ export const INITIAL_STATE = Immutable({
   list: null,
   current: null,
   dates: null,
+  logs: null,
   error: null,
   fetching: false
 })
@@ -47,6 +49,7 @@ export const current = (state: Object, { current, dates }: Object) =>
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_CURRENT]: current,
   [Types.FETCH_LIST]: request,
+  [Types.FETCH_LOGS]: request,
   [Types.FETCH_SUCCESS]: success,
   [Types.FETCH_FAILURE]: failure
 })

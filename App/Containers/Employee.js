@@ -15,6 +15,7 @@ import Moment from 'moment'
 import EmployeeActions from '../Redux/EmployeeRedux'
 import Colors from '../Themes/Colors'
 import RoundedButton from '../Components/RoundedButton'
+import TimeLogs from '../Components/TimeLogs'
 // external libs
 // import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
@@ -84,7 +85,7 @@ class Employee extends Component {
               <Text style={styles.email} onPress={() => this.handleOpenEmail(employee.email)}>{employee.email}</Text>
             </View>
           </View>
-
+          <TimeLogs currentWeek={this.state.weekNum} userId={employee.id}/>
           <Text style={styles.viewingHeader}>Currently Viewing</Text>
           <Text style={styles.viewing}>{this.state.viewing}</Text>
           <RoundedButton onPress={this.openCalendar}>
