@@ -1,7 +1,13 @@
 // @flow
 
 import React, {Component} from 'react'
-import { View, Text, ListView, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  ListView,
+  TouchableOpacity,
+  Picker
+} from 'react-native'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 import Calendar from 'react-native-calendar-select'
@@ -66,7 +72,8 @@ class TimeLogs extends Component {
     this.state = {
       ...dates,
       viewing: this.viewingFormat(dates.startDate, dates.endDate),
-      logs: ds.cloneWithRows(dataObjects)
+      logs: ds.cloneWithRows(dataObjects),
+      viewMode: this.props.viewMode
     };
   }
 
@@ -100,9 +107,7 @@ class TimeLogs extends Component {
 
   renderWeek (week, section, index) {
     return (
-      <TouchableOpacity style={styles.row}>
-        <Week data={week} weekIndex={index} />
-      </TouchableOpacity>
+      <Week data={week} weekIndex={index} userId={this.props.userId} viewMode={this.state.viewMode} />
     )
   }
 
@@ -116,6 +121,14 @@ class TimeLogs extends Component {
     return (
       <View style={styles.container}>
         <AlertMessage title={`No data found for ${this.state.viewing}`} show={this.noRowData()} />
+          <Text style={styles.viewModeLabel}>View Mode:</Text>
+          <Picker
+            style={styles.viewMode}
+            selectedValue={this.state.viewMode}
+            onValueChange={mode => this.setState({viewMode: mode})}>
+            <Picker.Item label="Month" value="month" />
+            <Picker.Item label="Week" value="week" />
+          </Picker>
         <Text style={styles.viewingHeader}>Currently Viewing</Text>
         <Text style={styles.viewing}>{this.state.viewing}</Text>
         <ListView
@@ -156,21 +169,31 @@ class Week extends Component {
   componentWillMount() {
     // DataSource configured
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id})
+    // @todo add hours and minutes
+    let hours = this.props.data.days_in_week.map(day => day.hours)
+    let status = this.props.data.status
+
     // Datasource is always in state
-    this.state = {
-      days: ds.cloneWithRows(this.props.data.days_in_week)
+    this.setState({
+      days: ds.cloneWithRows(this.props.data.days_in_week),
+      totalTime: hours.reduce((a, b) => a + b),
+      status,
+      statusStyle: this.statusStyle(status)
+    })
+  }
+
+  statusStyle(status) {
+    const statusStyles = {
+      approved: styles.weekApproved,
+      rejected: styles.weekRejected,
+      waiting: styles.weekWaiting
     }
+    return statusStyles[status] || statusStyles['waiting']
   }
 
   renderDay (day, sec, i) {
     return (
-      //@todo add note modal on touch
-      <TouchableOpacity style={styles.day}>
-      <Day data={day} dayIndex={i}/>
-        <View>
-          <Text style={styles.boldLabel}>{day.hours} hours, {day.minutes} minutes</Text>
-        </View>
-      </TouchableOpacity>
+      <Day style={styles.day} data={day} dayIndex={i}/>
     )
   }
 
@@ -180,26 +203,37 @@ class Week extends Component {
     return this.state.days.getRowCount() === 0
   }
 
-  weekStyle(status) {
-    const weekStatusStyles = {
-      approved: styles.weekApproved,
-      rejected: styles.weekRejected,
-      pending: styles.weekPending
-    };
-    return weekStatusStyles[status] || weekStatusStyles['pending']
+  setStatus(status, userId){
+    EmployeeActions.setStatus(status, this.props.data.week_id, userId)
+    this.setState({status, statusStyle: this.statusStyle(status)})
   }
 
   render () {
-    return (
-      <View style={this.weekStyle[this.props.data.status]}>
-        <AlertMessage title='No data available for this week!' show={this.noRowData()} />
-        <Text>Total Time: </Text>
-        <ListView
+    let status = this.state.status || 'waiting'
+    let dayList = null
+    if (this.props.viewMode === 'week') {
+      dayList = <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.days}
           renderRow={this.renderDay.bind(this)}
           pageSize={7}
         />
+    }
+    return (
+      <View style={[styles.row, styles.week]}>
+        <AlertMessage title='No data available for this week!' show={this.noRowData()} />
+        {dayList}
+        <View style={styles.weekSummary}>
+          <Text>Total Time: {this.state.totalTime} hours</Text>
+          <Picker
+            style={[styles.setStatus, this.state.statusStyle]}
+            selectedValue={status}
+            onValueChange={status => this.setStatus(status, this.props.userId)}>
+            <Picker.Item label="Approved" value="approved" />
+            <Picker.Item label="Rejected" value="rejected" />
+            <Picker.Item label="Waiting" value="waiting" />
+          </Picker>
+        </View>
       </View>
     )
   }
@@ -216,10 +250,11 @@ class Day extends Component {
   }
 
   render () {
+    const data = this.props.data;
     return (
-      <View style={styles.dayCell}>
-        <Text style={styles.weekday}>{Moment().day(this.props.dayIndex).format('dddd')}</Text>
-        <Text style={styles.dayLog}>{this.props.data.log}</Text>
+      <View style={styles.day}>
+        <Text>{Moment().day(this.props.dayIndex).format('dddd MMM Do, YYYY')}</Text>
+        <Text>Logged: {data.hours} hours, {data.minutes} minutes</Text>
       </View>
     )
   }
@@ -228,7 +263,8 @@ class Day extends Component {
 const mapStateToProps = state => {
   return {
     fetching: state.employee.fetching,
-    logs: state.employee.logs
+    logs: state.employee.logs,
+    viewMode: 'month'
   }
 }
 

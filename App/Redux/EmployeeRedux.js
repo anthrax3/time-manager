@@ -9,6 +9,8 @@ const { Types, Creators } = createActions({
   fetchList: ['list'],
   fetchLogs: ['userId', 'period'],
   setCurrent: ['current', 'dates'],
+  setStatus: ['status', 'weekId', 'userId'],
+  setStatusSuccess: ['logs'],
   fetchListSuccess: ['list'],
   fetchLogsSuccess: ['logs'],
   fetchFailure: ['error'],
@@ -49,8 +51,10 @@ export const current = (state: Object, { current, dates }: Object) =>
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_CURRENT]: current,
+  [Types.SET_STATUS]: request,
   [Types.FETCH_LIST]: request,
   [Types.FETCH_LOGS]: request,
+  [Types.SET_STATUS_SUCCESS]: success,
   [Types.FETCH_LIST_SUCCESS]: success,
   [Types.FETCH_LOGS_SUCCESS]: success,
   [Types.FETCH_FAILURE]: failure

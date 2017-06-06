@@ -48,6 +48,16 @@ class Api {
   }
 
   /**
+   * Log related API actions
+   * @param  {Array} date eg. [MM, YYYY]
+   * @return {Promise} fetch
+   */
+  setStatus(status, weekId, userId) {
+    const {training} = apiConfig;
+    return Api.put(`${training}${weekId}/users/${userId}`, {status})
+  }
+
+  /**
    * User related API actions
    * @param  {String} action
    * @return {Promise} fetch

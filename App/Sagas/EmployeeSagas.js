@@ -16,12 +16,24 @@ export function * fetchList (api, {type}) {
   }
 }
 
-export function * fetchLogs (api, {type, userId, period}) {
+export function * fetchLogs (api, {userId, period}) {
   // make the call to the api
   const logs = yield call(api.logs, userId, period);
   if (logs) {
     // dispatch failure
     yield put(EmployeeActions.fetchLogsSuccess(logs))
+  } else {
+    // dispatch employee list
+    yield put(EmployeeActions.fetchFailure('WRONG'))
+  }
+}
+
+export function * setStatus (api, {status, userId}) {
+  // make the call to the api
+  const updatedLogs = yield call(api.setStatus, status, userId);
+  if (updatedLogs) {
+    // dispatch failure
+    yield put(EmployeeActions.setStatusSuccess(updatedLogs))
   } else {
     // dispatch employee list
     yield put(EmployeeActions.fetchFailure('WRONG'))

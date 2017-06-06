@@ -8,6 +8,8 @@ const colors = {
   silver: '#F7F7F7',
   steel: '#CCCCCC',
   error: 'rgba(200, 0, 0, 0.8)',
+  rejected: '#540000',
+  approved: '#067100',
   ricePaper: 'rgba(255,255,255, 0.75)',
   frost: '#D8D8D8',
   cloud: 'rgba(200,200,200, 0.35)',

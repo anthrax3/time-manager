@@ -80,18 +80,27 @@ class EmployeeDirectory extends Component {
     return (!this.state.fetching && this.state.employees.getRowCount() === 0)
   }
 
+  toggleListView(){
+
+  }
+
   render () {
-    return (
-      <View style={styles.container}>
-        <AlertMessage title='No Employees found!' show={this.noRowData()} />
-        <LoadingIndicator show={this.props.fetching} text='Loading Directory' />
-        <ListView
+    let listView = null
+    if (!this.props.fetching) {
+      listView = <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.employees}
           renderRow={this.renderRow.bind(this)}
           pageSize={15}
           enableEmptySections
         />
+    }
+
+    return (
+      <View style={styles.container}>
+        <AlertMessage title='No Employees found!' show={this.noRowData()} />
+        <LoadingIndicator show={this.props.fetching} />
+        {listView}
       </View>
     )
   }
