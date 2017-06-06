@@ -26,18 +26,6 @@ export default StyleSheet.create({
     marginVertical: Metrics.smallMargin,
     padding: 10
   },
-  weekApproved: {
-    color: Colors.snow,
-    backgroundColor: Colors.approved
-  },
-  weekRejected: {
-    color: Colors.snow,
-    backgroundColor: Colors.rejected
-  },
-  weekWaiting: {
-    color: Colors.snow,
-    backgroundColor: Colors.bloodOrange
-  },
   weekSummary: {
     alignItems: 'center'
   },
@@ -51,8 +39,6 @@ export default StyleSheet.create({
     color: Colors.snow
   },
   viewMode: {
-    color: Colors.snow,
-    backgroundColor: Colors.fire,
     height: 45,
     borderRadius: 5,
     marginHorizontal: Metrics.section,

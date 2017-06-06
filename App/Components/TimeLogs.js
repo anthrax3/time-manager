@@ -121,14 +121,15 @@ class TimeLogs extends Component {
     return (
       <View style={styles.container}>
         <AlertMessage title={`No data found for ${this.state.viewing}`} show={this.noRowData()} />
-          <Text style={styles.viewModeLabel}>View Mode:</Text>
-          <Picker
-            style={styles.viewMode}
-            selectedValue={this.state.viewMode}
-            onValueChange={mode => this.setState({viewMode: mode})}>
-            <Picker.Item label="Month" value="month" />
-            <Picker.Item label="Week" value="week" />
-          </Picker>
+          <View>
+            <Text style={styles.viewModeLabel}>View Mode:</Text>
+            <Picker
+              selectedValue={this.state.viewMode}
+              onValueChange={mode => this.setState({viewMode: mode})}>
+              <Picker.Item label="Month" value="month" />
+              <Picker.Item label="Week" value="week" />
+            </Picker>
+          </View>
         <Text style={styles.viewingHeader}>Currently Viewing</Text>
         <Text style={styles.viewing}>{this.state.viewing}</Text>
         <ListView
@@ -177,18 +178,8 @@ class Week extends Component {
     this.setState({
       days: ds.cloneWithRows(this.props.data.days_in_week),
       totalTime: hours.reduce((a, b) => a + b),
-      status,
-      statusStyle: this.statusStyle(status)
+      status
     })
-  }
-
-  statusStyle(status) {
-    const statusStyles = {
-      approved: styles.weekApproved,
-      rejected: styles.weekRejected,
-      waiting: styles.weekWaiting
-    }
-    return statusStyles[status] || statusStyles['waiting']
   }
 
   renderDay (day, sec, i) {
@@ -206,7 +197,7 @@ class Week extends Component {
 
   setStatus(status, userId){
     EmployeeActions.setStatus(status, this.props.data.week_id, userId)
-    this.setState({status, statusStyle: this.statusStyle(status)})
+    this.setState({status})
   }
 
   render () {
@@ -227,12 +218,12 @@ class Week extends Component {
         <View style={styles.weekSummary}>
           <Text>Total Time: {this.state.totalTime} hours</Text>
           <Picker
-            style={[styles.setStatus, this.state.statusStyle]}
+            style={styles.setStatus}
             selectedValue={status}
             onValueChange={status => this.setStatus(status, this.props.userId)}>
-            <Picker.Item label="Approved" value="approved" />
-            <Picker.Item label="Rejected" value="rejected" />
-            <Picker.Item label="Waiting" value="waiting" />
+            <Picker.Item label="Approved" color={Colors.approved} value="approved" />
+            <Picker.Item label="Rejected" color={Colors.rejected} value="rejected" />
+            <Picker.Item label="Waiting" color={Colors.bloodOrange} value="waiting" />
           </Picker>
         </View>
       </View>
