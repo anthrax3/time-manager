@@ -19,7 +19,12 @@ export function * fetchList (api, {type}) {
 export function * fetchLogs (api, {userId, period}) {
   // make the call to the api
   const logs = yield call(api.logs, userId, period);
+
   if (logs) {
+    if (logs.data.weeks) {
+      let weeks = logs.data.weeks.sort((w1, w2) => w1.week_number > w2.week_number)
+      weeks.forEach(week => week.days_in_week.sort((d1, d2) => d1.day_number > d2.day_number))
+    }
     // dispatch failure
     yield put(EmployeeActions.fetchLogsSuccess(logs))
   } else {

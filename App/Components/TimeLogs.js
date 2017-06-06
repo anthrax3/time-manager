@@ -192,8 +192,9 @@ class Week extends Component {
   }
 
   renderDay (day, sec, i) {
+    const date = Moment().week(this.props.data.week_number).day(day.day_number)
     return (
-      <Day style={styles.day} data={day} dayIndex={i}/>
+      <Day style={styles.day} data={day} date={date} dayIndex={i}/>
     )
   }
 
@@ -253,7 +254,7 @@ class Day extends Component {
     const data = this.props.data;
     return (
       <View style={styles.day}>
-        <Text>{Moment().day(this.props.dayIndex).format('dddd MMM Do, YYYY')}</Text>
+        <Text>{this.props.date.format('dddd MMM Do, YYYY')}</Text>
         <Text>Logged: {data.hours} hours, {data.minutes} minutes</Text>
       </View>
     )
