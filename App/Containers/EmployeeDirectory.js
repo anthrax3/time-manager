@@ -1,10 +1,10 @@
 // @flow
 
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { View, Text, ListView, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
-import {Gravatar} from 'react-native-gravatar'
+import { Gravatar } from 'react-native-gravatar'
 import EmployeeActions from '../Redux/EmployeeRedux'
 
 // For empty lists
@@ -16,10 +16,10 @@ import styles from './Styles/EmployeeDirectoryStyle'
 
 type EmployeeDirectoryProps = {
   dispatch: () => any,
-  fetching: boolean,
+  employees: object,
   fetchList: () => void,
-  setCurrent: () => void,
-  employees: object
+  fetching: boolean,
+  setCurrent: () => void
 }
 
 class EmployeeDirectory extends Component {

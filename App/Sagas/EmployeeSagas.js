@@ -16,6 +16,13 @@ export function * fetchList (api, {type}) {
   }
 }
 
+/**
+ * [*fetchLogs description]
+ * @param {[type]} api            [description]
+ * @param {[type]} options.userId [description]
+ * @param {[type]} options.period [description]
+ * @yield {[type]} [description]
+ */
 export function * fetchLogs (api, {userId, period}) {
   // make the call to the api
   const logs = yield call(api.logs, userId, period);

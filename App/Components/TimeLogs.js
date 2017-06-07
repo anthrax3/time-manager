@@ -74,7 +74,7 @@ class TimeLogs extends Component {
       viewing: this.viewingFormat(dates.startDate, dates.endDate),
       logs: ds.cloneWithRows(dataObjects),
       viewMode: this.props.viewMode
-    };
+    }
   }
 
   componentWillReceiveProps ({fetching, logs}) {
