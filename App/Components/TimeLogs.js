@@ -121,17 +121,7 @@ class TimeLogs extends Component {
     return (
       <View style={styles.container}>
         <AlertMessage title={`No data found for ${this.state.viewing}`} show={this.noRowData()} />
-          <View>
-            <Text style={styles.viewModeLabel}>View Mode:</Text>
-            <Picker
-              selectedValue={this.state.viewMode}
-              onValueChange={mode => this.setState({viewMode: mode})}>
-              <Picker.Item label="Month" value="month" />
-              <Picker.Item label="Week" value="week" />
-            </Picker>
-          </View>
-        <Text style={styles.viewingHeader}>Currently Viewing</Text>
-        <Text style={styles.viewing}>{this.state.viewing}</Text>
+        <RoundedButton onPress={this.openCalendar}>{this.state.viewing}</RoundedButton>
         <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.logs}
@@ -139,7 +129,6 @@ class TimeLogs extends Component {
           pageSize={4}
           enableEmptySections
         />
-        <RoundedButton onPress={this.openCalendar}>Select Week</RoundedButton>
         <Calendar
           i18n='en'
           ref={calendar => {this.calendar = calendar}}
@@ -246,7 +235,7 @@ class Day extends Component {
     return (
       <View style={styles.day}>
         <Text>{this.props.date.format('dddd MMM Do, YYYY')}</Text>
-        <Text>Logged: {data.hours} hours, {data.minutes} minutes</Text>
+        <Text>{data.hours} hours, {data.minutes} minutes</Text>
       </View>
     )
   }
@@ -256,7 +245,7 @@ const mapStateToProps = state => {
   return {
     fetching: state.employee.fetching,
     logs: state.employee.logs,
-    viewMode: 'month'
+    viewMode: 'week'
   }
 }
 

@@ -22,7 +22,7 @@ export default class PresentationScreen extends React.Component {
             </Text>
           </View>
 
-          <View style={styles.section} >
+          <View style={styles.section}>
             <RoundedButton onPress={NavigationActions.employeeDirectory}>
               Employee Directory
             </RoundedButton>

@@ -8,6 +8,9 @@ export default StyleSheet.create({
     flex: 1,
     padding: Metrics.titlePadding
   },
+  section: {
+    width: '100%'
+  },
   day: {
     borderWidth: 0.5,
     borderColor: Colors.coal,

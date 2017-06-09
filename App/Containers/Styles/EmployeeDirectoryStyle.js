@@ -18,7 +18,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'nowrap',
     padding: 10,
-    backgroundColor: Colors.fire,
+    backgroundColor: Colors.charcoal,
     marginVertical: Metrics.smallMargin,
     justifyContent: 'flex-start'
   },

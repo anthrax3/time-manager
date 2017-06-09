@@ -19,5 +19,9 @@ export default StyleSheet.create({
   },
   homeBranding: {
     marginTop: 50
-  }
+  },
+  section: {
+    margin: Metrics.section,
+    padding: Metrics.baseMargin
+  },
 })
