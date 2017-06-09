@@ -31,6 +31,7 @@ export function * fetchLogs (api, {userId, period}) {
     if (logs.data.weeks) {
       let weeks = logs.data.weeks.sort((w1, w2) => w1.week_number > w2.week_number)
       weeks.forEach(week => week.days_in_week.sort((d1, d2) => d1.day_number > d2.day_number))
+      logs.data.weeks = weeks;
     }
     // dispatch failure
     yield put(EmployeeActions.fetchLogsSuccess(logs))

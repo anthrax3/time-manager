@@ -12,16 +12,22 @@ export default StyleSheet.create({
     width: '100%'
   },
   day: {
-    borderWidth: 0.5,
-    borderColor: Colors.coal,
-    alignItems: 'center',
+    marginVertical: 1,
+    padding: 5,
+    backgroundColor: Colors.snow,
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    justifyContent: 'space-between'
+  },
+  daysList: {
+    width: '100%'
+  },
+  listContent: {
     flex: 1,
-    flexDirection: 'column',
-    padding:5
+    flexDirection: 'column'
   },
   row: {
-    flex: 1,
-    flexDirection: 'row'
+    flex: 1
   },
   week: {
     backgroundColor: Colors.frost,
@@ -32,8 +38,8 @@ export default StyleSheet.create({
   weekSummary: {
     padding: 10,
     alignContent: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignSelf: 'center'
   },
   textLeft: {

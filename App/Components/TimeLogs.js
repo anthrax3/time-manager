@@ -172,7 +172,7 @@ class Week extends Component {
     })
   }
 
-  renderDay (day, sec, i) {
+  renderDay(day, sec, i) {
     const date = Moment().week(this.props.data.week_number).day(day.day_number)
     return (
       <Day style={styles.day} data={day} date={date} dayIndex={i}/>
@@ -181,7 +181,7 @@ class Week extends Component {
 
   // Used for friendly AlertMessage
   // returns true if the logs is empty
-  noRowData () {
+  noRowData() {
     return this.state.days.getRowCount() === 0
   }
 
@@ -190,12 +190,12 @@ class Week extends Component {
     this.setState({status})
   }
 
-  render () {
+  render() {
     let status = this.state.status || 'waiting'
     let dayList = null
     if (this.props.viewMode === 'week') {
       dayList = <ListView
-          contentContainerStyle={styles.listContent}
+          contentContainerStyle={[styles.listContent, styles.daysList]}
           dataSource={this.state.days}
           renderRow={this.renderDay.bind(this)}
           pageSize={7}
@@ -204,7 +204,6 @@ class Week extends Component {
     return (
       <View style={[styles.row, styles.week]}>
         <AlertMessage title='No data available for this week!' show={this.noRowData()} />
-        {dayList}
         <View style={styles.weekSummary}>
           <Text style={styles.textLeft}>Week: {this.props.data.week_number}</Text>
           <Text style={styles.textLeft}>Total Time: {this.state.totalTime} hours</Text>
@@ -217,6 +216,7 @@ class Week extends Component {
             <Picker.Item label="Waiting" color={Colors.bloodOrange} value="waiting" />
           </Picker>
         </View>
+        {dayList}
       </View>
     )
   }

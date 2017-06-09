@@ -19,7 +19,7 @@ export default StyleSheet.create({
     flexWrap: 'nowrap',
     padding: 10,
     backgroundColor: Colors.charcoal,
-    marginVertical: Metrics.smallMargin,
+    marginVertical: 0.5,
     justifyContent: 'flex-start'
   },
   boldLabel: {

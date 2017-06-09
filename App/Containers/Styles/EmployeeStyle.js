@@ -15,9 +15,7 @@ export default StyleSheet.create({
     flexWrap: 'nowrap',
     padding: Metrics.smallMargin,
     justifyContent: 'flex-start',
-    marginBottom: Metrics.doubleBaseMargin,
-    borderBottomColor: Colors.frost,
-    borderBottomWidth: 0.5
+    marginBottom: Metrics.doubleBaseMargin
   },
   username: {
     ...Fonts.style.h4,
@@ -27,8 +25,9 @@ export default StyleSheet.create({
     color: Colors.frost
   },
   avatar: {
-    width: 150,
-    height: 150,
-    marginRight: 10
+    width: 100,
+    height: 100,
+    marginRight: 10,
+    borderRadius: 50
   }
 })
