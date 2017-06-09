@@ -93,6 +93,7 @@ class TimeLogs extends Component {
 
   // Update states when new week selection is confirmed
   confirmDate({startDate, endDate, startMoment, endMoment}) {
+
     this.setState({
       startDate,
       endDate,
@@ -205,7 +206,8 @@ class Week extends Component {
         <AlertMessage title='No data available for this week!' show={this.noRowData()} />
         {dayList}
         <View style={styles.weekSummary}>
-          <Text>Total Time: {this.state.totalTime} hours</Text>
+          <Text style={styles.textLeft}>Week: {this.props.data.week_number}</Text>
+          <Text style={styles.textLeft}>Total Time: {this.state.totalTime} hours</Text>
           <Picker
             style={styles.setStatus}
             selectedValue={status}

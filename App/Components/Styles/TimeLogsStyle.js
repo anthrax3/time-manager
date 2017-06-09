@@ -30,7 +30,14 @@ export default StyleSheet.create({
     padding: 10
   },
   weekSummary: {
-    alignItems: 'center'
+    padding: 10,
+    alignContent: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignSelf: 'center'
+  },
+  textLeft: {
+    textAlign: 'left'
   },
   setStatus: {
     width: 140,
